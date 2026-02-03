@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
 
-let num = 0;
-const unusedVar = "This variable is not used";
-console.log(undeclaredVar); // undeclaredVar 未声明
 </script>
 
 <template>
@@ -25,6 +22,7 @@ console.log(undeclaredVar); // undeclaredVar 未声明
 </template>
 
 <style lang="scss" scoped>
+
 .logo {
   height: 6em;
   padding: 1.5em;

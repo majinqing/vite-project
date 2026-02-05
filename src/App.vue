@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/HelloWorld.vue';
+
+let num = 0;
+const unusedVar = "This variable is not used";
+console.log(unusedVar); // undeclaredVar 未声明
 
 </script>
 

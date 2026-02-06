@@ -18,5 +18,5 @@ export default {
   bracketSpacing: true,
   endOfLine: 'lf',
   // 缩进 Vue 文件中的 <script> 和 <style> 标签内容。
-  vueIndentScriptAndStyle: true,
+  vueIndentScriptAndStyle: false,
 };

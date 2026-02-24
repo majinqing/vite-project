@@ -18,7 +18,7 @@ const roures: RouteRecordRaw[] = [
     path: '/login',
     name: 'Login',
     // 登录页面
-    component: () => import('../views/login/index.vue'),
+    component: () => import('@/views/login/index.vue'),
     meta: {
       title: '登录',
     },
@@ -27,7 +27,7 @@ const roures: RouteRecordRaw[] = [
     path: '/',
     name: 'Index',
     // 首页
-    component: () => import('../views/index/index.vue'),
+    component: () => import('@/views/index/index.vue'),
     meta: {
       title: '首页',
       mark: '*:*:*',

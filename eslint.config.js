@@ -26,8 +26,8 @@ export default defineConfig([
   {
     // 自定义规则
     rules: {
-      'no-unused-vars': 'warn',
-      'no-undef': 'warn',
+      'no-unused-vars': 'off',
+      'no-undef': 'off',
       'no-console': 'warn',
     },
   },

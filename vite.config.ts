@@ -37,8 +37,7 @@ export default defineConfig({
     preprocessorOptions: {
       // scss全局文件引入
       scss: {
-        // additionalData: '@import "@/assets/styles/global.scss";' //这行代码可能会导致报错
-        additionalData: '@use "@/assets/styles/global.scss" as *;', //建议使用这行代码
+        additionalData: `@use "@/assets/styles/variables.scss" as *;`,
       },
     },
   },

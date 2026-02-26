@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
+import LayoutFrame from '@/layout/layout-frame/index.vue';
 
 /**
  * 路由
@@ -21,15 +22,32 @@ const roures: RouteRecordRaw[] = [
     component: () => import('@/views/login/index.vue'),
     meta: {
       title: '登录',
+      menu: true,
+      mark: 'sys:iot:menu',
+      icon: 'iot',
+      keepalive: false,
+      parentName: '',
+      sort: 0,
+      crumbs: ['物联网设备管理'],
     },
   },
   {
     path: '/',
-    name: 'Index',
-    // 首页
-    component: () => import('@/views/index/index.vue'),
+    name: 'Layout',
+    component: LayoutFrame,
+    children: [
+      {
+        path: '/',
+        name: 'Index',
+        component: () => import('@/views/index/index.vue'),
+        meta: {
+          title: '首页',
+          icon: 'index',
+          menu: true,
+        },
+      },
+    ],
     meta: {
-      title: '首页',
       mark: '*:*:*',
     },
   },

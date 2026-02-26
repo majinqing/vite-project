@@ -1,0 +1,6 @@
+// 阴影背景
+@mixin shadowBg($radius) {
+  background: #FFF;
+  box-shadow: 0 2px 1px rgba(127, 144, 161, .1);
+  border-radius: $radius;
+}

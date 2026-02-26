@@ -1,3 +1,183 @@
-$theme-color: green;
-$main-width: 100px;
-$main-height: 100px;
+@use "./element-plus";
+@use "./mixins";
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike,
+strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody,
+tfoot, thead, tr, th, td, textarea, input, header, head, footer {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+address, cite, dfn, em, var, i {
+  font-style: normal;
+}
+
+html, body, #app {
+  width: 100%;
+  height: 100%;
+}
+
+#app {
+  overflow: auto;
+}
+
+body {
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  color: #333;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+button, input, select, textarea {
+  font-size: 100%;
+}
+
+fieldset, img {
+  border: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #666;
+  background: none
+}
+
+ul, ol {
+  list-style: none;
+}
+
+:focus {
+  outline: none;
+}
+
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.center {
+  text-align: center;
+}
+
+.text-overflow-line {
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-overflow-line-two {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; //两行，行数可以自有定义
+  -webkit-box-orient: vertical;
+}
+
+i.icon {
+  display: inline-block;
+}
+
+::-webkit-scrollbar { /*滚动条整体样式*/
+  width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 12px;
+}
+
+::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+  border-radius: 12px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: rgba(144, 147, 153, .5);
+}
+
+::-webkit-scrollbar-track { /*滚动条里面轨道*/
+  background: transparent;
+}
+
+// open layers 地图
+.ol-zoom {
+  display: none;
+}
+
+.disabled {
+  cursor: no-drop !important;
+}
+
+.shadow {
+  @include mixins.shadowBg(2px);
+}
+
+.space-between {
+  padding-bottom: 20px;
+}
+
+.map > .ol-viewport:not(:last-child) {
+  display: none;
+}
+
+.operate-text {
+  min-width: auto;
+}
+
+.operate-text.is-link {
+  padding: 2px 10px;
+}
+
+.operate-text + .operate-text {
+  position: relative;
+  margin-left: 0;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 12px;
+    border-left: 1px solid #293847;
+    transform: translateY(-50%);
+  }
+}
+
+.fixed-bisection {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .bisection {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+}
+
+.el-date-editor.el-input {
+  display: inline-flex;
+}
+
+.el-form--inline .el-form-item__content {
+  min-width: 200px;
+}

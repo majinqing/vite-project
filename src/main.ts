@@ -1,9 +1,10 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import './style.css';
 import App from './App.vue';
 import router from './router';
 import source from './stores';
+// 公共样式
+import '@/assets/styles/global.scss';
 
 // 创建 vue 实例
 const app = createApp(App);

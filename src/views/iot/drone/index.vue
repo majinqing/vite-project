@@ -2,7 +2,7 @@
 
 <template>
   <div class="dashboard-wrapper">
-    <div class="login">首页</div>
+    <div class="login">仪表板</div>
     <div class="login">123213</div>
   </div>
 </template>

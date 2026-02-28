@@ -2,4 +2,23 @@
   position: relative;
   width: 100%;
   height: 100%;
+  background-color: #ECF1F5;
+  --frame-menu-width: 210px;
+  --el-menu-base-level-padding: 12px;
+  --frame-header-height: 54px;
+  --frame-header-crumbs-height: 40px;
+  --frame-default-spacing: 20px;
+
+  .wrapper {
+    width: 100%;
+    height: 100%;
+    padding-top: calc(var(--frame-header-height) + var(--frame-header-crumbs-height) + 1px);
+    padding-left: var(--frame-menu-width);
+    transition: padding-left var(--el-transition-duration);
+  }
+}
+
+.container-small-menu {
+  --el-menu-base-level-padding: 20px;
+  --frame-menu-width: calc(var(--el-menu-icon-width) + var(--el-menu-base-level-padding) * 2);
 }

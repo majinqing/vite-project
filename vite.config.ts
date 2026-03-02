@@ -7,6 +7,8 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import { resolve } from 'path';
 import { fileURLToPath, URL } from 'node:url';
 import { join } from 'node:path';
+import UnoCSS from 'unocss/vite';
+
 // 项目根目录
 const PROJECT_ROOT: string = fileURLToPath(new URL('./', import.meta.url));
 console.log('项目根目录111:', PROJECT_ROOT);
@@ -16,6 +18,7 @@ export default defineConfig({
   envDir: PROJECT_ROOT,
   plugins: [
     vue(),
+    UnoCSS(),
     /** element plus 自动按需导入插件配置 start */
     AutoImport({
       imports: ['vue', 'vue-router'],

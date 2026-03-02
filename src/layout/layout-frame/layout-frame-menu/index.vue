@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import manageRouter from '@/router';
 import type { RouteRecordRaw } from 'vue-router';
+import { routeTree } from '@/assets/utils/route';
+import BaseMenuItem from '@/components/base-menu-item/index.vue';
+
 // 参数
 defineProps<{
   // 展开/收起
@@ -12,8 +15,7 @@ const route = useRoute();
 const menuList = computed(() => {
   // 路由
   const routes: RouteRecordRaw[] = manageRouter.getRoutes().filter((item) => item.meta.menu);
-  // return routeTree(routes, '');
-  return routes;
+  return routeTree(routes, '');
 });
 // 路径
 const fullPath = computed(() => {
@@ -57,7 +59,7 @@ function jumpFirstPage() {
         :default-active="fullPath"
         router
       >
-        <!--        <base-menu-item v-for="(item, index) in menuList" :key="index" :menu="item" />-->
+        <base-menu-item v-for="(item, index) in menuList" :key="index" :menu="item" />
       </el-menu>
     </el-scrollbar>
   </div>

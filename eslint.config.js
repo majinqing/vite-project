@@ -28,7 +28,8 @@ export default defineConfig([
     rules: {
       'no-unused-vars': 'off',
       'no-undef': 'off',
-      'no-console': 'warn',
+      'no-console': 'off',
+      'vue/multi-word-component-names': 0,
     },
   },
   prettierRecommended,

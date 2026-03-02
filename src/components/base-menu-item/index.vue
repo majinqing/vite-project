@@ -13,7 +13,7 @@ defineProps<{
   <el-sub-menu v-if="menu.children && menu.children.length > 0" :index="menu.path">
     <template #title>
       <i v-if="menu.meta!.icon" class="el-icon">
-        <svg-icon :name="menu.meta!.icon" />
+        <svg-icon :name="menu.meta!.icon as string" />
       </i>
       <span class="menu-item-text text-overflow-line">{{ menu.meta!.title }}</span>
     </template>
@@ -22,7 +22,7 @@ defineProps<{
   <el-menu-item v-else :index="menu.path">
     <template #title>
       <i v-if="menu.meta!.icon" class="el-icon">
-        <svg-icon :name="menu.meta!.icon" />
+        <svg-icon :name="menu.meta!.icon as string" />
       </i>
       <span class="menu-item-text text-overflow-line">{{ menu.meta!.title }}</span>
     </template>

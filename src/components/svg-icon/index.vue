@@ -5,7 +5,7 @@ const props = withDefaults(
     // 首字
     prefix?: string;
     // 名称
-    name: string;
+    name?: string;
     // 颜色
     color?: string;
     // 渐变颜色
@@ -52,7 +52,7 @@ const svgFill = computed(() => {
         <stop offset="1" :stop-color="gradientColor" />
       </linearGradient>
     </defs>
-    <use :xlink:href="symbolId" :fill="svgFill" />
+    <use :href="symbolId" :fill="svgFill" />
   </svg>
 </template>
 

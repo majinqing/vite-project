@@ -1,13 +1,7 @@
 <script lang="ts" setup>
-import {
-  ArrowRight,
-  CaretBottom,
-  Expand,
-  Fold,
-  Iphone,
-  Monitor,
-  Refresh,
-} from '@element-plus/icons-vue';
+import { ArrowRight, Expand, Fold, Refresh } from '@element-plus/icons-vue';
+// 面包屑项：字符串 或 对象
+type CrumbItem = string | { path?: string; name: string; back?: boolean };
 // 参数
 const props = defineProps<{
   // 展开/收起
@@ -33,8 +27,7 @@ const isCollapse = computed<boolean>({
 const router = useRouter();
 const route = useRoute();
 // 面包屑
-const crumbs = computed(() => route.meta.crumbs || []);
-
+const crumbs = computed<CrumbItem[]>(() => (route.meta.crumbs as CrumbItem[] | undefined) || []);
 /**
  * 返回上一页
  */

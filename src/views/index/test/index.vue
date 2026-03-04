@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import Test from './test/index.vue';
-
-const a = ref('123');
+const props = withDefaults(
+  defineProps<{
+    name?: string;
+  }>(),
+  {
+    name: '222',
+  }
+);
 
 const open = () => {
-  a.value = '456';
-  console.log(a.value);
   ElMessage('This is a message.');
 };
 </script>
@@ -13,9 +16,7 @@ const open = () => {
 <template>
   <div class="dashboard-wrapper">
     <div class="login">首页</div>
-    <div class="login">123213</div>
-    <el-button @click="open">222</el-button>
-    <test :name="a"></test>
+    <el-button @click="open">{{ props.name }}</el-button>
   </div>
 </template>
 

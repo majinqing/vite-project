@@ -11,6 +11,8 @@ import {
 } from 'unocss';
 
 export default defineConfig({
+  // 不再为 class="container" 生成样式
+  blocklist: ['container'],
   shortcuts: [
     // ...
   ],

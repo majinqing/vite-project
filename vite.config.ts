@@ -21,12 +21,15 @@ export default defineConfig({
     UnoCSS(),
     /** element plus 自动按需导入插件配置 start */
     AutoImport({
-      imports: ['vue', 'vue-router'],
+      imports: ['vue', 'vue-router', 'pinia'],
       dts: join(PROJECT_ROOT, 'auto-imports.d.ts'),
+      // api（ref等）
       resolvers: [ElementPlusResolver()],
     }),
     Components({
+      // 所有的组件都自动导入
       dts: join(PROJECT_ROOT, 'components.d.ts'),
+      // 解析组件
       resolvers: [ElementPlusResolver()],
     }),
     /** element plus 自动按需导入插件配置 end */

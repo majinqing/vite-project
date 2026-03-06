@@ -1,5 +1,15 @@
 <script setup lang="ts">
 import Test from './test/index.vue';
+import { useUserStore } from '@/stores/modules/user';
+
+const userStore = useUserStore();
+
+userStore.getUserInfo({
+  username: '张三',
+  mobile: '13800000000',
+});
+
+console.log('用户信息', userStore.userInfo);
 
 const a = ref('123');
 

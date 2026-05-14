@@ -27,14 +27,9 @@ export const useUserStore = defineStore('user', {
      * 安全退出登录
      */
     logOutSafely(): Promise<boolean> {
-      return new Promise((resolve) => {
-        // LOG_OUT_SAFELY().finally(() => {
-        //   this.userInfo = undefined;
-        //   this.purview = [];
-        //   removeToken();
-        //   resolve(true);
-        // });
-      });
+      this.userInfo = undefined;
+      this.purview = [];
+      return Promise.resolve(true);
     },
   },
   persist: {

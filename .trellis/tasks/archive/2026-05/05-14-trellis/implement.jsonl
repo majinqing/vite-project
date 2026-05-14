@@ -1,0 +1,2 @@
+{"file":".trellis/workflow.md","reason":"本演示任务的核心目标是熟悉 Trellis 任务流，需要注入官方 workflow 作为实现阶段主流程依据。"}
+{"file":".trellis/spec/frontend/index.md","reason":"虽然本任务不改业务代码，但保留项目前端规范入口，便于演示真实任务在实现阶段如何注入规范上下文。"}

@@ -1,0 +1,2 @@
+{"file":".trellis/workflow.md","reason":"本演示任务需要根据 workflow 校验 planning、start、finish、archive 等步骤是否符合 Trellis 预期流程。"}
+{"file":".trellis/spec/frontend/index.md","reason":"保留项目前端规范入口，用于演示检查阶段通常会参考哪些规范文件，即使本任务不涉及业务代码。"}

@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "command": "\"C:\\Users\\HP\\AppData\\Local\\Programs\\Python\\Python313\\python.exe\" .cursor/hooks/inject-subagent-context.py",
+        "matcher": "Task|Subagent",
+        "timeout": 30
+      }
+    ],
+    "sessionStart": [
+      {
+        "command": "\"C:\\Users\\HP\\AppData\\Local\\Programs\\Python\\Python313\\python.exe\" .cursor/hooks/session-start.py",
+        "timeout": 30
+      }
+    ],
+    "beforeSubmitPrompt": [
+      {
+        "command": "powershell.exe -ExecutionPolicy Bypass -File .cursor/hooks/safe-python-hook.ps1 -PythonExe \"C:\\Users\\HP\\AppData\\Local\\Programs\\Python\\Python313\\python.exe\" -ScriptPath .cursor/hooks/inject-workflow-state.py -FallbackHookEventName UserPromptSubmit",
+        "timeout": 15
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "\"C:\\Users\\HP\\AppData\\Local\\Programs\\Python\\Python313\\python.exe\" .cursor/hooks/inject-shell-session-context.py",
+        "timeout": 5
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -ExecutionPolicy Bypass -File .codex/hooks/safe-python-hook.ps1 -PythonExe \"C:\\Users\\HP\\AppData\\Local\\Programs\\Python\\Python313\\python.exe\" -ScriptPath .codex/hooks/inject-workflow-state.py -FallbackHookEventName UserPromptSubmit",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

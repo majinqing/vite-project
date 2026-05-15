@@ -1,0 +1,5 @@
+{"file":".trellis/spec/frontend/index.md","reason":"校验前端改动是否符合仓库规范。"}
+{"file":".trellis/spec/frontend/ai-development-workflow.md","reason":"检查是否满足 docs-first + TDD 以及验证要求。"}
+{"file":".trellis/spec/frontend/quality-guidelines.md","reason":"质量检查需覆盖构建、测试和实现边界。"}
+{"file":".trellis/spec/frontend/type-safety.md","reason":"检查新增状态和数据结构的类型一致性。"}
+{"file":".trellis/tasks/05-15-iot-equipment-add-device/prd.md","reason":"校验实现是否符合本次需求与验收标准。"}

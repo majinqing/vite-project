@@ -1,0 +1,5 @@
+{"file":".trellis/spec/frontend/index.md","reason":"前端任务总索引，确认适用规范入口。"}
+{"file":".trellis/spec/frontend/ai-development-workflow.md","reason":"本次属于前端行为变更，需遵循 docs-first + TDD。"}
+{"file":".trellis/spec/frontend/component-guidelines.md","reason":"页面组件实现需保持 Vue SFC、Composition API 和 SCSS 约定。"}
+{"file":".trellis/spec/frontend/type-safety.md","reason":"新增表单状态和设备 mock 数据需要保持 TypeScript 类型安全。"}
+{"file":".trellis/tasks/05-15-iot-equipment-add-device/prd.md","reason":"实现时以任务需求和验收标准为准。"}

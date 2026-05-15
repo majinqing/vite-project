@@ -196,6 +196,7 @@ Then run `task.py start <task-dir>` to flip status to in_progress.
 
 [workflow-state:in_progress]
 **Flow**: trellis-implement → trellis-check → trellis-update-spec → commit (Phase 3.4) → `/trellis:finish-work`.
+**Frontend behavior-change rule**: if the task changes frontend behavior, fixes a frontend bug, refactors frontend behavior, or adds frontend tests, load `frontend-docs-first-tdd` first and follow its docs-first / `Red -> Green -> Refactor` constraints before normal implementation and checking.
 **Main-session default (no override)**: dispatch the `trellis-implement` / `trellis-check` sub-agents — the main agent does NOT edit code by default. Phase 3.4 commit (required, once): after trellis-update-spec, or whenever implementation is verifiably complete, the main agent **drives the commit** — state the commit plan in user-facing text, then run `git commit` — BEFORE suggesting `/trellis:finish-work`. `/finish-work` refuses to run on a dirty working tree (paths outside `.trellis/workspace/` and `.trellis/tasks/`).
 **Sub-agent self-exemption**: if you are already running as `trellis-implement`, implement directly from the loaded task context and do NOT spawn another `trellis-implement`; if you are already running as `trellis-check`, review/fix directly and do NOT spawn another `trellis-check`. The default dispatch rule applies to the main session only.
 **Sub-agent dispatch protocol (all platforms, all sub-agents)**: When you spawn `trellis-implement` / `trellis-check` / `trellis-research`, your dispatch prompt **MUST** start with one line: `Active task: <task path from \`task.py current\`>`. No exceptions. On class-2 platforms (codex / copilot / gemini / qoder) the sub-agent depends on this line because there is no hook to inject task context. On class-1 platforms (claude / cursor / opencode / kiro / codebuddy / droid) the line is normally redundant — the hook injects context directly — but it serves as a critical fallback when the hook fails (Windows + Claude Code PreToolUse silent skip, `--continue` resume, fork distribution, hooks disabled, etc.). For `trellis-research`, the line tells the sub-agent which `{task_dir}/research/` to write into.
@@ -209,6 +210,7 @@ Then run `task.py start <task-dir>` to flip status to in_progress.
 
 [workflow-state:in_progress-inline]
 **Flow** (inline mode): main session loads `trellis-before-dev` → main session edits code → main session loads `trellis-check` → run lint / type-check / tests → fix → `trellis-update-spec` → commit (Phase 3.4) → `/trellis:finish-work`.
+**Frontend behavior-change rule**: if the task changes frontend behavior, fixes a frontend bug, refactors frontend behavior, or adds frontend tests, load `frontend-docs-first-tdd` first and follow its docs-first / `Red -> Green -> Refactor` constraints before normal implementation and checking.
 **Main-session default (inline dispatch_mode)**: the main agent edits code directly. Do NOT dispatch `trellis-implement` / `trellis-check` sub-agents. Load the `trellis-before-dev` skill before writing code; load the `trellis-check` skill before reporting completion.
 Phase 3.4 commit (required, once): after `trellis-update-spec`, or whenever implementation is verifiably complete, the main agent **drives the commit** — state the commit plan in user-facing text, then run `git commit` — BEFORE suggesting `/trellis:finish-work`. `/finish-work` refuses to run on a dirty working tree (paths outside `.trellis/workspace/` and `.trellis/tasks/`).
 [/workflow-state:in_progress-inline]
@@ -250,6 +252,7 @@ When a user request matches one of these intents, load the corresponding skill (
 | User intent | Route |
 |---|---|
 | Wants a new feature / requirement unclear | `trellis-brainstorm` |
+| Frontend behavior change / frontend bug fix / frontend behavior refactor / frontend tests | Load `frontend-docs-first-tdd` first, then continue per Phase 2 |
 | About to write code / start implementing | Dispatch the `trellis-implement` sub-agent per Phase 2.1 |
 | Finished writing / want to verify | Dispatch the `trellis-check` sub-agent per Phase 2.2 |
 | Stuck / fixed same bug several times | `trellis-break-loop` |
@@ -264,6 +267,7 @@ When a user request matches one of these intents, load the corresponding skill (
 | User intent | Skill |
 |---|---|
 | Wants a new feature / requirement unclear | `trellis-brainstorm` |
+| Frontend behavior change / frontend bug fix / frontend behavior refactor / frontend tests | `frontend-docs-first-tdd` |
 | About to write code / start implementing | `trellis-before-dev` (then implement directly in the main session) |
 | Finished writing / want to verify | `trellis-check` |
 | Stuck / fixed same bug several times | `trellis-break-loop` |
@@ -454,6 +458,8 @@ Goal: turn the prd into code that passes quality checks.
 
 #### 2.1 Implement `[required · repeatable]`
 
+If the task changes frontend behavior, fixes a frontend bug, refactors frontend behavior, or adds frontend tests, first load `frontend-docs-first-tdd`. Follow its docs-first flow, complete requirement confirmation, document the requirement/validation basis, and apply `Red -> Green -> Refactor` before treating the task as normal implementation work. If the skill allows a downgrade (copy-only change, style-only change, tiny fix, or missing test infrastructure), state the downgrade reason and keep the minimum validation plan.
+
 [Claude Code, Cursor, OpenCode, Gemini, Qoder, CodeBuddy, Copilot, Droid, Pi]
 
 Spawn the implement sub-agent:
@@ -507,6 +513,8 @@ The platform prelude auto-handles the context load requirement:
 [/codex-inline, Kilo, Antigravity, Windsurf]
 
 #### 2.2 Quality check `[required · repeatable]`
+
+For frontend behavior-change tasks, verify that `frontend-docs-first-tdd` was actually followed: requirement confirmation exists, validation/test notes exist, and the report explains whether the task achieved "fail first, then pass" or why a documented downgrade was necessary.
 
 [Claude Code, Cursor, OpenCode, codex-sub-agent, Kiro, Gemini, Qoder, CodeBuddy, Copilot, Droid, Pi]
 

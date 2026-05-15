@@ -18,6 +18,7 @@
 |------|------|------|
 | [目录结构](./directory-structure.md) | 模块组织与文件布局 | 已完成 |
 | [组件规范](./component-guidelines.md) | Vue 单文件组件、props、样式约定 | 已完成 |
+| [前端 AI 开发流程](./ai-development-workflow.md) | 前端行为变化任务的 docs-first + TDD 流程约定 | 已完成 |
 | [组合式逻辑规范](./hook-guidelines.md) | Vue composable 与 setup 逻辑约定 | 已完成 |
 | [状态管理规范](./state-management.md) | Pinia 模块与持久化约定 | 已完成 |
 | [质量规范](./quality-guidelines.md) | 代码标准与检查项 | 已完成 |
@@ -31,10 +32,11 @@
 
 1. 调整文件位置或新增模块前，先看 `directory-structure.md`
 2. 修改 `.vue` 文件前，先看 `component-guidelines.md`
-3. 抽离复用逻辑前，先看 `hook-guidelines.md`
-4. 修改 Pinia 或持久化逻辑前，先看 `state-management.md`
-5. 提交前做自查时，先看 `quality-guidelines.md`
-6. 改动路由、props、store、共享类型时，先看 `type-safety.md`
+3. 只要任务涉及前端行为变化、缺陷修复、影响行为的重构、补测试，先看 `ai-development-workflow.md`
+4. 抽离复用逻辑前，先看 `hook-guidelines.md`
+5. 修改 Pinia 或持久化逻辑前，先看 `state-management.md`
+6. 提交前做自查时，先看 `quality-guidelines.md`
+7. 改动路由、props、store、共享类型时，先看 `type-safety.md`
 
 这些文档的目的，是帮助 AI 助手和新同事理解“这个仓库现在真实是怎么写的”，
 而不是泛泛地描述一个普通 Vue 项目应该怎么写。

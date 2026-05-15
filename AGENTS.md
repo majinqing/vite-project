@@ -1,103 +1,3 @@
----
-description: Vue.js 现代 Web 应用开发最佳实践与约定
-globs: **/*.vue, **/*.ts, components/**/*
-
----
-
-# Vue.js 最佳实践
-
-## 组件结构
-
-- 优先使用 Composition API，而不是 Options API
-- 保持组件职责单一、体量适中
-- 正确集成 TypeScript
-- 为 props 提供明确校验与类型定义
-- 为 emits 提供显式声明
-- 保持模板层逻辑简洁
-
-## Composition API 使用规范
-
-- 正确使用 `ref` 与 `reactive`
-- 合理实现生命周期钩子
-- 将可复用逻辑提炼为 composables
-- 保持 `setup` 逻辑清晰易读
-- 合理使用 `computed`
-- 谨慎并正确地使用 `watch`
-
-## 状态管理
-
-- 使用 Pinia 进行状态管理
-- 保持 store 模块化
-- 合理拆分和组合状态
-- 正确实现 actions
-- 正确实现 getters
-- 妥善处理异步状态
-
-## 性能优化
-
-- 合理使用组件懒加载
-- 实现适当的缓存策略
-- 正确使用计算属性
-- 避免不必要的 watcher
-- 根据场景正确选择 `v-show` 与 `v-if`
-- 合理管理列表 key
-
-## 路由
-
-- 正确使用 Vue Router
-- 实现合理的导航守卫
-- 正确使用路由 meta 字段
-- 妥善处理路由参数
-- 合理实现页面懒加载
-- 使用规范的路由跳转方式
-
-## 表单
-
-- 正确使用 `v-model`
-- 实现合理的表单校验
-- 妥善处理表单提交流程
-- 提供明确的加载状态
-- 做好错误处理
-- 支持合理的表单重置
-
-## TypeScript 集成
-
-- 为组件提供正确的类型定义
-- 为 props 提供准确类型
-- 为 emits 提供准确声明
-- 保证类型推导可读且可靠
-- 为 composables 提供合适类型
-- 为 store 提供清晰类型定义
-
-## 测试
-
-- 编写合理的单元测试
-- 编写组件测试
-- 正确使用 Vue Test Utils
-- 测试 composables 逻辑
-- 合理使用 mock
-- 覆盖异步场景
-
-## 通用最佳实践
-
-- 遵循 Vue 官方风格指南
-- 使用统一且清晰的命名规范
-- 保持组件目录与职责清晰
-- 实现恰当的错误处理
-- 使用规范的事件处理方式
-- 为复杂逻辑补充必要说明
-
-## 构建与工具链
-
-- 使用 Vite 进行开发与构建
-- 配置合理的构建流程
-- 正确使用环境变量
-- 实现适当的代码拆分
-- 规范处理静态资源
-- 做好构建优化配置
-
---- project-doc ---
-
 <!-- TRELLIS:START -->
 # Trellis 使用说明
 
@@ -130,3 +30,16 @@ globs: **/*.vue, **/*.ts, components/**/*
 - 为了绕开当前受控会话中 `python` 命令解析失败的问题，本仓库已经把 `.codex/hooks.json` 和 `.cursor/hooks.json` 的 hook 命令改成了 Python 绝对路径：`C:\Users\HP\AppData\Local\Programs\Python\Python313\python.exe`
 - 如果后续 Python 升级或安装路径变化，需要同步更新以上两个文件中的命令路径。
 - 仓库还新增了 `.\.trellis\python.cmd` 作为统一入口。以后手动执行 Trellis 脚本时，优先使用：`.\.trellis\python.cmd .\.trellis\scripts\<script>.py ...`
+
+## 前端 AI 辅助开发流程
+
+- 纯问答、解释、仓库规则说明类请求，直接回答，不进入前端实现流程。
+- 纯文案调整且不改变交互、状态流、路由、校验、权限、提交链路时，可以不走严格 TDD。
+- 纯样式调整且不改变用户可见行为时，可以不走严格 TDD。
+- 只要是前端新功能、行为修改、缺陷修复、影响行为的重构、补前端测试，默认进入 `frontend-docs-first-tdd`。
+- 需求不清、范围未锁定、存在多种实现路径时，先走 `trellis-brainstorm`，在 `prd.md` 中把目标、范围、验收标准聊清楚。
+- 一旦确认任务存在前端行为变化，执行阶段先遵循 `frontend-docs-first-tdd`：先确认需求，再补齐“需求/范围”和“测试用例/验证计划”两类文档，再按 `Red -> Green -> Refactor` 推进实现。
+- 当前仓库测试基础设施不足时，允许对严格 TDD 做降级，但必须先说明原因，并保留最小可行验证方案；不得跳过需求确认和验证说明。
+- 降级场景仅限：纯文案、纯样式、极小修复、测试基础设施不足且短期内无法补齐。
+- 即使降级，最低验证要求仍然是说明验证方式；涉及实际前端改动时，至少执行 `npm.cmd run build`，涉及 UI 或路由变化时补充手工冒烟验证说明。
+- 前端任务完成后，仍按 Trellis 主流程收尾：`trellis-check` / `trellis-update-spec` / commit / `/trellis:finish-work`。

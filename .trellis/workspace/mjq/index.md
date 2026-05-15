@@ -7,9 +7,9 @@
 ## 当前状态
 
 <!-- @@@auto:current-status -->
-- **当前文件**：`journal-1.md`
-- **总会话数**：0
-- **最后活跃时间**：-
+- **Active File**: `journal-1.md`
+- **Total Sessions**: 1
+- **Last Active**: 2026-05-15
 <!-- @@@/auto:current-status -->
 
 ---
@@ -17,9 +17,9 @@
 ## 当前文档
 
 <!-- @@@auto:active-documents -->
-| 文件 | 行数 | 状态 |
-|------|------|------|
-| `journal-1.md` | ~0 | 当前使用 |
+| File | Lines | Status |
+|------|-------|--------|
+| `journal-1.md` | ~42 | Active |
 <!-- @@@/auto:active-documents -->
 
 ---
@@ -28,7 +28,8 @@
 
 <!-- @@@auto:session-history -->
 | # | 日期 | 标题 | 提交 | 分支 |
-|---|------|------|------|------|
+|---|------|-------|---------|--------|
+| 1 | 2026-05-15 | 物联网设备管理页面交互完善 | `0150690`, `0c6e386`, `b0c0ed3` | `master` |
 <!-- @@@/auto:session-history -->
 
 ---

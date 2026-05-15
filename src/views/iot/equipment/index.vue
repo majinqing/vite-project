@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import type { Component } from 'vue';
 import {
   Bell,
@@ -34,6 +34,14 @@ type DeviceRecord = {
   lastReport: string;
   manager: string;
   pendingTask: string;
+};
+
+type AddDeviceForm = {
+  name: string;
+  type: string;
+  area: string;
+  protocol: string;
+  manager: string;
 };
 
 type AlertRecord = {
@@ -87,7 +95,7 @@ const overviewCards: OverviewCard[] = [
   },
 ];
 
-const devices: DeviceRecord[] = [
+const initialDevices: DeviceRecord[] = [
   {
     id: 'EQ-10021',
     name: '一号田环境网关',
@@ -204,6 +212,8 @@ const areaOptions: SelectOption<string>[] = [
   ...areaRecords.map((item) => ({ label: item.name, value: item.name })),
 ];
 
+const deviceAreaOptions = areaOptions.filter((item) => item.value !== '全部区域');
+
 const statusOptions: SelectOption<FilterStatus>[] = [
   { label: '全部状态', value: 'all' },
   { label: '在线', value: 'online' },
@@ -211,14 +221,67 @@ const statusOptions: SelectOption<FilterStatus>[] = [
   { label: '离线', value: 'offline' },
 ];
 
+const protocolOptions: SelectOption<string>[] = [
+  { label: 'MQTT', value: 'MQTT' },
+  { label: 'CoAP', value: 'CoAP' },
+  { label: 'Modbus', value: 'Modbus' },
+  { label: 'HTTP', value: 'HTTP' },
+];
+
+const devices = ref<DeviceRecord[]>([...initialDevices]);
+
 const filters = reactive({
   keyword: '',
   area: '全部区域',
   status: 'all' as FilterStatus,
 });
 
+const createDefaultAddDeviceForm = (): AddDeviceForm => ({
+  name: '',
+  type: '',
+  area: deviceAreaOptions[0]?.value ?? '',
+  protocol: protocolOptions[0]?.value ?? 'MQTT',
+  manager: '',
+});
+
+const addDeviceVisible = ref(false);
+const addDeviceForm = reactive<AddDeviceForm>(createDefaultAddDeviceForm());
+
+const resetAddDeviceForm = () => {
+  Object.assign(addDeviceForm, createDefaultAddDeviceForm());
+};
+
+const openAddDeviceDialog = () => {
+  resetAddDeviceForm();
+  addDeviceVisible.value = true;
+};
+
+const closeAddDeviceDialog = () => {
+  addDeviceVisible.value = false;
+  resetAddDeviceForm();
+};
+
+const canSubmitAddDevice = computed(() =>
+  Boolean(
+    addDeviceForm.name.trim() &&
+      addDeviceForm.type.trim() &&
+      addDeviceForm.area.trim() &&
+      addDeviceForm.protocol.trim() &&
+      addDeviceForm.manager.trim(),
+  ),
+);
+
+const createNextDeviceId = () => {
+  const maxId = devices.value.reduce((max, item) => {
+    const current = Number(item.id.replace('EQ-', ''));
+    return Number.isNaN(current) ? max : Math.max(max, current);
+  }, 10000);
+
+  return `EQ-${String(maxId + 1).padStart(5, '0')}`;
+};
+
 const filteredDevices = computed(() =>
-  devices.filter((item) => {
+  devices.value.filter((item) => {
     const matchKeyword =
       !filters.keyword ||
       item.name.includes(filters.keyword) ||
@@ -233,9 +296,9 @@ const filteredDevices = computed(() =>
 );
 
 const statusSummary = computed(() => {
-  const online = devices.filter((item) => item.status === 'online').length;
-  const warning = devices.filter((item) => item.status === 'warning').length;
-  const offline = devices.filter((item) => item.status === 'offline').length;
+  const online = devices.value.filter((item) => item.status === 'online').length;
+  const warning = devices.value.filter((item) => item.status === 'warning').length;
+  const offline = devices.value.filter((item) => item.status === 'offline').length;
 
   return { online, warning, offline };
 });
@@ -271,6 +334,32 @@ const resetFilters = () => {
   filters.area = '全部区域';
   filters.status = 'all';
 };
+
+const submitAddDevice = () => {
+  if (!canSubmitAddDevice.value) {
+    return;
+  }
+
+  devices.value = [
+    {
+      id: createNextDeviceId(),
+      name: addDeviceForm.name.trim(),
+      type: addDeviceForm.type.trim(),
+      area: addDeviceForm.area,
+      status: 'online',
+      protocol: addDeviceForm.protocol,
+      battery: 100,
+      signal: 96,
+      lastReport: '刚刚接入',
+      manager: addDeviceForm.manager.trim(),
+      pendingTask: '待配置策略',
+    },
+    ...devices.value,
+  ];
+
+  resetFilters();
+  closeAddDeviceDialog();
+};
 </script>
 
 <template>
@@ -282,6 +371,23 @@ const resetFilters = () => {
         <p class="hero-description">
           当前页面先用静态业务数据填充设备管理主视图，方便展示“设备总览、筛选检索、告警跟进、设备台账”的完整信息结构，后续可直接替换为真实接口。
         </p>
+        <div class="hero-search">
+          <el-input
+            v-model="filters.keyword"
+            data-testid="global-search-input"
+            class="hero-search-input"
+            placeholder="全局搜索设备名称、编号或类型"
+            clearable
+          >
+            <template #prefix>
+              <el-icon><Search /></el-icon>
+            </template>
+          </el-input>
+          <div class="hero-search-meta">
+            <span>已同步到设备台账关键字筛选</span>
+            <strong>当前命中 {{ filteredDevices.length }} 台设备</strong>
+          </div>
+        </div>
         <div class="hero-tags">
           <span class="hero-tag">统一纳管</span>
           <span class="hero-tag">状态追踪</span>
@@ -340,7 +446,13 @@ const resetFilters = () => {
           </div>
           <div class="panel-head-actions">
             <el-button plain>批量下发</el-button>
-            <el-button type="primary">新增接入</el-button>
+            <el-button
+              type="primary"
+              data-testid="open-add-device"
+              @click="openAddDeviceDialog"
+            >
+              新增接入
+            </el-button>
           </div>
         </div>
 
@@ -498,6 +610,82 @@ const resetFilters = () => {
         </article>
       </aside>
     </section>
+
+    <el-dialog
+      v-model="addDeviceVisible"
+      data-testid="add-device-dialog"
+      class="add-device-dialog"
+      width="720px"
+      append-to-body
+      @close="closeAddDeviceDialog"
+    >
+      <template #header>
+        <div class="add-device-dialog-head">
+          <div>
+            <p class="section-kicker">新增接入</p>
+            <h3>先用模拟数据跑通设备录入链路</h3>
+          </div>
+          <span>提交后会直接进入设备台账并参与现有筛选</span>
+        </div>
+      </template>
+
+      <div class="add-device-form">
+        <el-input
+          v-model="addDeviceForm.name"
+          data-testid="add-device-name"
+          placeholder="请输入设备名称"
+        />
+        <el-input
+          v-model="addDeviceForm.type"
+          data-testid="add-device-type"
+          placeholder="请输入设备类型"
+        />
+        <el-select
+          v-model="addDeviceForm.area"
+          data-testid="add-device-area"
+          placeholder="请选择所属区域"
+        >
+          <el-option
+            v-for="item in deviceAreaOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+        <el-select
+          v-model="addDeviceForm.protocol"
+          data-testid="add-device-protocol"
+          placeholder="请选择接入协议"
+        >
+          <el-option
+            v-for="item in protocolOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+        <el-input
+          v-model="addDeviceForm.manager"
+          data-testid="add-device-manager"
+          placeholder="请输入负责人"
+        />
+      </div>
+
+      <template #footer>
+        <div class="add-device-actions">
+          <el-button data-testid="cancel-add-device" @click="closeAddDeviceDialog">
+            取消
+          </el-button>
+          <el-button
+            type="primary"
+            data-testid="submit-add-device"
+            @click="submitAddDevice"
+          >
+            确认接入
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 

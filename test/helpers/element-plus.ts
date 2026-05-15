@@ -86,6 +86,39 @@ export const ElButtonStub = defineComponent({
   },
 });
 
+export const ElDialogStub = defineComponent({
+  name: 'ElDialog',
+  props: {
+    modelValue: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: ['update:modelValue', 'close'],
+  setup(props, { attrs, emit, slots }) {
+    return () =>
+      props.modelValue
+        ? h('div', { 'data-testid': attrs['data-testid'] ?? 'dialog-stub' }, [
+            slots.header ? h('div', { class: 'el-dialog-header-stub' }, slots.header()) : null,
+            slots.default ? h('div', { class: 'el-dialog-body-stub' }, slots.default()) : null,
+            slots.footer ? h('div', { class: 'el-dialog-footer-stub' }, slots.footer()) : null,
+            h(
+              'button',
+              {
+                type: 'button',
+                'data-testid': 'dialog-close',
+                onClick: () => {
+                  emit('update:modelValue', false);
+                  emit('close');
+                },
+              },
+              'close',
+            ),
+          ])
+        : null;
+  },
+});
+
 export const ElTagStub = defineComponent({
   name: 'ElTag',
   setup(_, { slots }) {

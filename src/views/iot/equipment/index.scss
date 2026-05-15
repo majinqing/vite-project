@@ -32,7 +32,7 @@
   display: flex;
   min-width: 0;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .hero-kicker,
@@ -56,6 +56,33 @@
   font-size: 14px;
   line-height: 1.7;
   color: #61758d;
+}
+
+.hero-search {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.hero-search-input {
+  :deep(.el-input__wrapper) {
+    min-height: 44px;
+    border-radius: 14px;
+    box-shadow: 0 0 0 1px rgba(37, 83, 145, 0.08);
+  }
+}
+
+.hero-search-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 12px;
+  font-size: 12px;
+  color: #5f7691;
+
+  strong {
+    color: #214a78;
+  }
 }
 
 .hero-tags {
@@ -184,6 +211,9 @@
   min-height: 0;
   grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.9fr);
   gap: 12px;
+  align-items: start;
+  padding-bottom: 12px;
+  overflow: auto;
 }
 
 .device-panel,
@@ -216,6 +246,38 @@
   gap: 8px;
 }
 
+.add-device-dialog-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+
+  h3 {
+    margin: 6px 0 0;
+    font-size: 18px;
+    color: #18314d;
+  }
+
+  span {
+    font-size: 12px;
+    color: #65809f;
+  }
+}
+
+.add-device-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.add-device-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+}
+
 .panel-icon {
   color: #2c578e;
   font-size: 20px;
@@ -239,10 +301,8 @@
 
 .device-list {
   display: grid;
-  min-height: 0;
   gap: 10px;
   margin-top: 14px;
-  overflow: auto;
 }
 
 .device-row {
@@ -324,9 +384,9 @@
 
 .side-column {
   display: grid;
-  min-height: 0;
-  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto auto;
   gap: 12px;
+  align-items: start;
 }
 
 .alert-panel,
@@ -415,12 +475,12 @@
 
 @media (max-width: 960px) {
   .equipment-page {
-    height: auto;
-    overflow: visible;
+    height: 100%;
   }
 
   .hero-panel,
   .device-row,
+  .add-device-form,
   .filter-bar,
   .side-column,
   .hero-side-grid {
@@ -428,7 +488,9 @@
   }
 
   .panel-head,
+  .add-device-dialog-head,
   .table-summary,
+  .hero-search-meta,
   .alert-meta,
   .area-item-top,
   .area-item-foot {
@@ -438,6 +500,11 @@
 
   .panel-head-actions {
     width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .add-device-actions {
+    justify-content: flex-start;
     flex-wrap: wrap;
   }
 }

@@ -1,0 +1,7 @@
+interface:
+  display_name: "前端文档先行 TDD"
+  short_description: "前端变更默认走需求确认、双文档和严格 TDD"
+  default_prompt: "Use $frontend-docs-first-tdd to handle this frontend change with docs-first confirmation, dual docs, and strict Red -> Green -> Refactor."
+
+policy:
+  allow_implicit_invocation: true
